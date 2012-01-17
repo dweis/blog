@@ -1,0 +1,22 @@
+form(method="post", action=isNew?"/posts":"/posts/"+post.slug)
+  - if (!isNew)
+    input(type="hidden", name="_method", value="put")
+  p
+    label(for="title") Title
+    input#post-title(type="text", name="title", value=post.title)
+
+  p
+    label(for="body") Body
+    textarea#post-body(id="wmd-input", class="edit", name="body")!= post.body
+
+  p
+    label(for="excerpt") Excerpt/Description
+    textarea#post-excerpt(name="excerpt")!= post.excerpt
+
+  p
+    label(for="tags") Tags
+    input#post-tags(type="text", name="tags", value=post.tags.join(", "))
+  
+  input(type="submit", value="Post")
+
+script(src="/javascripts/wmd/wmd.js")

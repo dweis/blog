@@ -1,0 +1,29 @@
+.entry
+  != partial('posts/_post', {'users': users, 'post': post, 'author': users[post.author]})
+  h4 Comments
+  .comments
+    - each comment in post.comments
+      .comment
+        .thumbnail
+          img.thumbnail(src=user_photo(users[comment.author].email))
+        .body= comment.body
+        .author= users[comment.author].first_name
+        .created= pretty_date(comment.created)
+        .actions
+          - if (is_admin)
+            form(method="post", action="/posts/" + post.slug + "/comments/" + comment._id)
+              input(type="hidden", name="_method", value="delete")
+              input(type="submit", value="Delete")
+  
+    .comment-form
+      - if (is_authenticated) 
+        form(method="post", action="/posts/" + post.slug + "/comments")
+          p
+            textarea(name="body", rows=6, cols=40)
+          p.actions
+            input(type="submit", value="comment")
+      - else 
+        | You must be logged in to comment.
+        | Login via
+        a(href="/auth/facebook") facebook
+        | .

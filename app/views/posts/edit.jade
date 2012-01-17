@@ -1,0 +1,7 @@
+.wmd
+  .entry
+    h1 Edit post
+
+    != partial('posts/_form', {post: post, isNew: false})
+
+  != partial('posts/_preview', {post: post})

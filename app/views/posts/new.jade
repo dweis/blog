@@ -1,0 +1,8 @@
+- var post = {title: '', body: '', tags: []}
+.wmd
+  .entry
+    h1 Creating new post
+
+    != partial('posts/_form', {post: post, isNew: true})
+
+  != partial('posts/_preview', {post: post})

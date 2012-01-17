@@ -1,0 +1,10 @@
+logs/*
+pids/*
+nohup.out
+node_modules/*
+public/styles/*
+config/config.js
+config/production.js
+config/development.js
+config/testing.js
+npm-debug.log

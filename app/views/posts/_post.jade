@@ -1,0 +1,27 @@
+h1
+  a(href="/posts/" + post.slug)
+    = post.title
+.post
+    != markdown(post.body)
+.meta
+  .author-photo
+    img.thumbnail(src=user_photo(author.email))
+  .info
+    |Posted by #{author.first_name}
+    = pretty_date(post.created)
+    |.
+  - if (is_admin)
+    .actions
+      a.post-button(href="/posts/" + post.slug + "/edit") Edit
+      form(method="post", action="/posts/" + post.slug + "/delete")
+        input(type="hidden", name="_method", value="delete")
+        input(type="submit", value="Delete")
+  .tags
+    | Tags: 
+    - count = 0
+    - each tag in post.tags
+      - if (count != 0)
+        | ,
+      a(href="/posts/tag/" + tag) 
+        = tag
+      - count++

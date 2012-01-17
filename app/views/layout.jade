@@ -1,0 +1,89 @@
+!!! 5
+html(lang="en")
+  head
+    - if (typeof title != 'undefined') 
+      title= title
+    - else 
+      title= site_name()
+
+    link(type="text/css", rel="stylesheet", href=theme_css())
+    link(type="text/css", rel="stylesheet", href="/styles/prettify-sunburst.css")
+    link(rel="alternate", type="application/rss+xml", href=absolute_to("rss.xml"))
+
+    script(src="http://static.ak.fbcdn.net/connect/en_US/core.js")
+    script(src="/javascripts/jquery-1.6.1.min.js")
+    script(src="/javascripts/underscore.min.js")
+    script(src="/javascripts/prettify/prettify.js")
+
+    != analytics_code()
+
+    script
+      $(function(){
+          $('.entry pre, .entry code').addClass('prettyprint')
+
+          prettyPrint()
+      })
+
+  body
+    #header
+      h1.title
+        a(href='/posts')= site_name()
+      - if (is_authenticated)
+        #header-info
+          | Welcome, #{user.first_name}. 
+          | Not #{user.first_name}? &nbsp;
+          a(href='/logout') Logout
+      - else
+        #header-info
+          a.fb_button.fb_button_medium(href='/auth/facebook')
+            span#fb_login_text.fb_button_text
+              | Connect with Facebook
+
+    #container
+      ul#menu
+        - if (is_admin)
+          li
+            a(href="/posts/new") New Post
+        li
+          a(href="/") Posts
+        li
+          a(href="http://ca.linkedin.com/pub/derrick-weis/3/567/900", target="_new") LinkedIn
+        li
+          a(href="http://www.facebook.com/derrick.weis", target="_new") Facebook
+        li
+          a(href="http://twitter.com/#!/dload", target="_new") Twitter
+
+      - if (flash_error.length)
+        ul#errors
+          - each error in flash_error
+            li= error 
+
+      - if (flash_info.length)
+        ul#info
+          - each info in flash_info
+            li= info
+
+      #content!= body
+
+      - if (typeof tags != 'undefined' && Object.keys(tags).length)
+        #tags
+          h3 Tags:
+          ul
+            - each count, tag in tags 
+              li
+                a(href="/posts/tag/" + tag)= tag
+
+      #ad
+        != ads_code()
+
+    #footer
+      p
+        | Copyright &copy; 2011-2012 Derrick Weis
+
+      p
+        a(href="http://nodejs.org", target="_new")
+          img(src="/images/nodejs-badge.png", border="0")
+
+    a(href="http://github.com/gentooist/blog")
+      img(style="position: absolute; top: 0; right: 0; border: 0;", src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67", alt="Fork me on GitHub")
+

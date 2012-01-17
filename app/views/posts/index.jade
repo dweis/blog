@@ -1,0 +1,7 @@
+#entries
+- each post in posts
+  .entry
+    != partial('posts/_post', {'users': users, 'post': post, 'author': users[post.author]})
+
+    a(href="/posts/" + post.slug)
+      = pluralize('comment', post.comments.length)

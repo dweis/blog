@@ -1,0 +1,241 @@
+@import 'mixins/wmd-buttons'
+@import 'mixins/border-radius'
+
+page_font = 12px Helvetica, Georgia, Arial, sans-serif
+page_width = 750px
+
+darkness_green = #becf4b
+darkness_darkgrey = #303030
+darkness_lightgrey = #a1a1a1
+darkness_superlight = #e1e1e1
+darkness_error = #d55
+darkness_info = #dd5
+
+darkness-button(bg, fg)
+  background-color bg
+  color fg !important
+  text-decoration none
+  padding 5px
+  border-radius 5px
+  margin 5px 
+  outline none
+  border none
+  cursor pointer
+  font-size 14pt
+
+body
+  margin 0 auto
+  padding 0px
+  width page_width
+  font page_font
+  color darkness_lightgrey
+  background-color darkness_darkgrey
+
+  img.thumbnail
+    border-radius 8px
+
+  a
+    color darkness_green
+
+  .actions
+    margin 5px 0px 5px 0px
+
+    form
+      display inline
+
+    a, input
+      darkness-button(darkness_darkgrey, darkness_superlight)
+
+  #header
+    position relative
+    height 40px
+    width 100%
+
+    h1 a
+      text-decoration none
+      text-align center
+      font-size 36pt
+
+    #header-info
+      position absolute
+      width 250px
+      right 0px
+      top 0px
+      text-align right
+
+  ul#menu
+    list-style none  
+    padding 0
+
+    li
+      float left
+      padding 10px 15px 30px 0px
+      font-size 15pt
+      margin 0 auto
+
+      a
+        text-decoration none
+
+  ul#errors, ul#info
+    clear both
+    list-style none  
+    padding 0
+    border-radius 15px
+    padding 10px
+    margin-bottom 25px
+    font-weight bold
+
+    li
+      padding 5px
+      font-size 13pt
+      margin 0 auto
+
+  ul#errors
+    background-color darkness_error
+    color darkness_superlight
+
+  ul#info
+    background-color darkness_info
+    color darkness_darkgrey
+
+  #content
+    clear both
+
+    .entry
+      padding 30px
+      margin 25px 0px 15px 0px
+      border-radius 15px 45px 15px 15px
+      background-color darkness_superlight
+      color darkness_darkgrey
+      font-size 14pt
+
+      h1 a
+        text-decoration none
+
+      a
+        color darkness_darkgrey
+
+      .post
+        h1
+          text-decoration none
+          font-size 20pt
+          margin 0
+          padding 0
+
+        a
+          color darkness_darkgrey
+          font-weight bold
+
+        pre
+          font-size 11pt
+
+      .meta
+        padding 20px 0px 10px 0px
+        border-radius 5px
+        background white
+        padding 8px
+        margin-bottom 20px
+
+        .author-photo
+          float right
+          padding 0px
+          margin -3px
+
+        .tags
+          padding-bottom 15px
+
+          a
+            color darkness_green
+            font-weight bold
+          
+      .comments
+        clear both
+
+        .comment
+          background white
+          padding 10px
+          margin 10px
+          color darkness_darkgrey
+          border-radius 5px
+          clear both
+          font-size 10pt
+
+          .thumbnail
+            float left
+            margin-right 10px
+
+          .body
+            margin 5px 5px 15px 5px
+            font-size 12pt
+
+          .author
+            font-weight bold
+
+          .created 
+            font-style italic
+
+    .comment-form
+      textarea
+        width 100%
+        border 0px 
+        outline 0px 
+        font-size 13pt
+        padding 5px 
+        border-radius 5px 
+
+  #footer
+    padding 20px
+    clear both
+    width page_width
+    margin 0 auto
+    text-align center
+
+    #badges
+      padding 5px
+      border 1px solid #f00
+
+#tags
+  ul
+    list-style none
+    margin 0
+    padding 0
+
+    li 
+      font-size 12pt
+      margin 5px 10px 5px 0px
+      display inline
+
+      a
+        text-decoration none
+
+.wmd
+  #wmd-button-bar
+    border-radius 5px 5px 5px 5px
+    background-color #fff
+    padding 3px
+    width 100%
+    margin-bottom 10px
+
+  .entry
+    form 
+      label
+        font-size 14pt
+        font-weight bold
+        
+      input, textarea
+        width 100%
+        border 0px
+        outline 0px
+        font-size 13pt
+        padding 5px
+        border-radius 5px
+
+      textarea
+        height 200px
+        resize none
+
+      input[type="text"]
+        margin 10px 0 0 0
+
+      input[type="submit"]
+        background-color darkness_green

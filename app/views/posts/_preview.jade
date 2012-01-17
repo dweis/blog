@@ -1,0 +1,18 @@
+.entry#preview
+  h1= post.title
+  .post
+    .wmd-preview
+  .meta
+    .author-photo
+      img.thumbnail(src=current_user_photo)
+    .info
+      |Posted by #{user.first_name} 
+      = pretty_date(post.created)
+      |.
+  .tags
+    h4 Tags
+    - each tag in post.tags
+      a(href="#")
+        = tag
+
+script(src="/javascripts/preview.js")
