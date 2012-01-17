@@ -101,5 +101,9 @@ exports.helpers = {
 
   markdown: function(md) {
     return discount.parse(md)
+  },
+
+  custom_links: function() {
+    return config.customLinks
   }
 }

@@ -46,12 +46,11 @@ html(lang="en")
             a(href="/posts/new") New Post
         li
           a(href="/") Posts
-        li
-          a(href="http://ca.linkedin.com/pub/derrick-weis/3/567/900", target="_new") LinkedIn
-        li
-          a(href="http://www.facebook.com/derrick.weis", target="_new") Facebook
-        li
-          a(href="http://twitter.com/#!/dload", target="_new") Twitter
+
+        - if (custom_links().length)
+          - each link in custom_links()
+            li
+              a(href=link.link, target="_new")= link.name
 
       - if (flash_error.length)
         ul#errors

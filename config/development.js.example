@@ -16,4 +16,8 @@ module.exports = {
   , appPort: 3000
   , appIp: '127.0.0.1'
   , appWorkers: 4
+  , customLinks: [
+      { name: 'First link', link: 'http://www.someplace.com' }
+    , { name: 'Second Link', link: 'http://someotherplace.org' }
+    ]
 }
