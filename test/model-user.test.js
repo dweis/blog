@@ -1,20 +1,6 @@
-/*var vows = require('vows')
-  , assert = require('assert')
+var mocha = require('mocha')
+  , should = require('should')
   , mongoose = require('mongoose')
-
-require('../../app/models/models')(mongoose)
-
-var db = mongoose.createConnection('mongodb://localhost/blog_test')
-
-function setup(callback) {
-  var User = db.model('User')
-
-  User.remove({}).exec(function(){
-    callback(User)
-  })
-
-  return db
-}
 
 function getSaneUserValues() {
   return {
@@ -28,156 +14,128 @@ function getSaneUserValues() {
     , timezone: 1
   }
 }
+require('../app/models/models')(mongoose)
 
-vows
-  .describe('User Model')
+describe('User Model', function() {
+  var db, User
 
-  .addBatch({
-    'WHEN I create new new user with valid data ': {
-      topic: function() {
-        var callback = this.callback
+  beforeEach(function(done) {
+    db = mongoose.createConnection('mongodb://localhost/blog_test')
 
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
+    User = db.model('User')
 
-          user.save(callback)
-        })
-      },
-      'THEN it should set the created time stamp': function(err, user) {
-        assert.equal(err, null)
-        assert.notEqual(user.created, null)
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save a user with a string as the id': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.id = 'a'
-
-          user.save(callback)
-        })
-      },
-      'THEN it should fail to save': function(err, user) {
-        assert.notEqual(err, null)
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save with an id of less than 1': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.id = 0
-
-          user.save(callback)
-        })
-      },
-      'THEN it should fail to save': function(err, user) {
-        assert.notEqual(err, null)
-        assert.equal(err.message, 'Validation failed')
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save without an email address': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.email = null
-
-          user.save(callback)
-        })
-      },
-      'THEN it should fail to save': function(err, user) {
-        assert.notEqual(err, null)
-        assert.equal(err.message, 'Validation failed')
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save with an invalid email address': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.email = 'test@test'
-
-          user.save(callback)
-        })
-      },
-      'THEN it should fail to save': function(err, user) {
-        assert.notEqual(err, null)
-        assert.equal(err.message, 'Validation failed')
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save two users with the same id': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.save(function(err, user) {
-            var anotherUser = new User(getSaneUserValues())
-
-            anotherUser.save(callback)
-          })
-        })
-      },
-      'THEN it should fail to save the second one': function(err, user) {
-        assert.notEqual(err, null)
-        assert.ok(err.message.match(/duplicate key error/))
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I try to save a user with an invalid link': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(User) {
-          var user = new User(getSaneUserValues())
-
-          user.link = 'blah'
-
-          user.save(callback)
-        })
-      },
-      'THEN it should fail to save': function(err, user) {
-        assert.notEqual(err, null)
-        assert.equal(err.message, 'Validation failed')
-      },
-      teardown: function() {
-        this.db.close()
-      }
-    }
+    User.remove({}, function() {
+      done()
+    })
   })
 
-  .export(module)*/
+  afterEach(function(done) {
+    db.close()
+    done()
+  })
+
+  describe('I save a new user with valid data', function() {
+    it ('should be successful', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.save(function(err) {
+        should.not.exist(err)
+        should.exist(user.created)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a user with a string as the id', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.id = 'a'
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a user with an id of less than 1', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.id = 0
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a user without an email address', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.email = undefined
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a user without an email address', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.email = undefined
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a user with an invalid email address', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.email = 'test@test'
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I try to save two users with the same id', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.save(function(err) {
+        var anotherUser = new User(getSaneUserValues())
+
+        anotherUser.save(function(err) {
+          should.exist(err)
+          done()
+        })
+      })
+    })
+  })
+
+  describe('I attempt to save a user with an invalid link', function() {
+    it ('should fail to save', function(done) {
+      var user = new User(getSaneUserValues())
+
+      user.link = 'blah'
+
+      user.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+})

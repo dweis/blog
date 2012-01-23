@@ -43,70 +43,44 @@ describe('Post Model', function() {
       })
     })
   })
-})
 
-/*
-  , 'WHEN I attempt to save a post without an author': {
-      topic: function() {
-        var callback = this.callback
+  describe('I attempt to save a post without an author', function() {
+    it ('should fail to save', function(done) {
+      var post = new Post(getSanePostValues())
 
-        this.db = setup(function(Post) {
-          var post = new Post(getSanePostValues())
+      post.author = undefined
 
-          post.author = undefined
-
-          post.save(callback)
-        })
-      }
-    , 'THEN it should fail to save': function(err, post) {
-        assert.ok(err instanceof Error)
-      }
-    , teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I attempt to save a post without a body': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(Post) {
-          var post = new Post(getSanePostValues())
-
-          post.body = undefined
-
-          post.save(callback)
-        })
-      }
-    , 'THEN it should fail to save': function(err, post) {
-        assert.ok(err instanceof Error)
-      }
-    , teardown: function() {
-        this.db.close()
-      }
-    }
-
-  , 'WHEN I attempt to save a post without a title': {
-      topic: function() {
-        var callback = this.callback
-
-        this.db = setup(function(Post) {
-          var post = new Post(getSanePostValues())
-
-          post.title = undefined
-
-          post.save(callback)
-        })
-      }
-    , 'THEN it should fail to save': function(err, post) {
-        assert.notEqual(err, null)
-      }
-    , teardown: function() {
-        this.db.close()
-      }
-
-    }
+      post.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
   })
 
-  .export(module)
-  */
+
+  describe('I attempt to save a post without an body', function() {
+    it ('should fail to save', function(done) {
+      var post = new Post(getSanePostValues())
+
+      post.body = undefined
+
+      post.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+
+  describe('I attempt to save a post without a title', function() {
+    it ('should fail to save', function(done) {
+      var post = new Post(getSanePostValues())
+
+      post.title = undefined
+
+      post.save(function(err) {
+        should.exist(err)
+        done()
+      })
+    })
+  })
+})
