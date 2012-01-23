@@ -1,5 +1,4 @@
-var application = require('./app/lib/application')
-  , config = application.getConfig()
+var config = require('config').config
   , log = require('logging').from(__filename)
   , cluster = require('cluster')
   , numCPUs = require('os').cpus().length

@@ -1,9 +1,8 @@
-var application = require('../lib/application')
-  , config = application.getConfig()
+var config = require('config').config
   , gravatar = require('gravatar')
   , moment = require('moment')
   , jade = require('jade')
-  , discount = require('discount')
+  , markdown = require('markdown').markdown
 
 exports.dynamicHelpers = {
   flash_error: function(req, res) {
@@ -100,7 +99,7 @@ exports.helpers = {
   },
 
   markdown: function(md) {
-    return discount.parse(md)
+    return markdown.toHTML(md)
   },
 
   custom_links: function() {

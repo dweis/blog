@@ -1,20 +1,6 @@
-var vows = require('vows')
-  , assert = require('assert')
+var mocha = require('mocha')
+  , should = require('should')
   , mongoose = require('mongoose')
-
-require('../../app/models/models')(mongoose)
-
-function setup(callback) {
-  var db = mongoose.createConnection('mongodb://localhost/blog_test')
-
-  var Post = db.model('Post')
-
-  Post.remove({}, function(){
-    callback(Post)
-  })
-
-  return db
-}
 
 function getSanePostValues() {
   return {
@@ -24,35 +10,42 @@ function getSanePostValues() {
   }
 }
 
-vows.describe('Post Model')
-  .addBatch({
-    'WHEN I save a new post with valid data': {
-      topic: function() {
-        var callback = this.callback
+require('../app/models/models')(mongoose)
 
-        this.db = setup(function(Post) {
-          var post = new Post(getSanePostValues())
+describe('Post Model', function() {
+  var db, Post
 
-          post.save(callback)
-        })
-      }
-    , 'THEN it should be successfull': function(err, post) {
-        assert.equal(err, null)
-      }
-    , 'AND it should have set the created time stamp': function(err, post) {
-        assert.ok(post.created)
-      }
-    , 'AND it should have an updated time stamp': function(err, post) {
-        assert.ok(post.updated)
-      }
-    , 'AND it should have created a slug': function(err, post) {
-        assert.ok(post.slug.match(/testing/))
-      }
-    , teardown:  function() {
-        this.db.close()
-      }
-    }
+  beforeEach(function(done) {
+    db = mongoose.createConnection('mongodb://localhost/blog_test')
 
+    Post = db.model('Post')
+
+    Post.remove({}, function() {
+      done()
+    })
+  })
+
+  afterEach(function(done) {
+    db.close()
+    done()
+  })
+
+  describe('I save a new post with valid data', function() {
+    it ('should be successful', function(done) {
+      var post = new Post(getSanePostValues())
+
+      post.save(function(err) {
+        should.not.exist(err)
+        should.exist(post.created)
+        should.exist(post.updated)
+        post.slug.match(/testing/)
+        done()
+      })
+    })
+  })
+})
+
+/*
   , 'WHEN I attempt to save a post without an author': {
       topic: function() {
         var callback = this.callback
@@ -116,3 +109,4 @@ vows.describe('Post Model')
   })
 
   .export(module)
+  */

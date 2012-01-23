@@ -3,8 +3,7 @@ pids/*
 nohup.out
 node_modules/*
 public/styles/*
-config/config.js
-config/production.js
-config/development.js
-config/testing.js
+config/production.yaml
+config/development.yaml
+config/testing.yaml
 npm-debug.log

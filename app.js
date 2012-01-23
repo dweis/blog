@@ -1,6 +1,6 @@
-var application = require('./app/lib/application')
-  , config = application.getConfig()
-  , express = require('express')
+var config = require('config').config
+
+var express = require('express')
   , stylus = require('stylus')
   , jade = require('jade')
   , auth = require('connect-auth')

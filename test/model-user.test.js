@@ -1,4 +1,4 @@
-var vows = require('vows')
+/*var vows = require('vows')
   , assert = require('assert')
   , mongoose = require('mongoose')
 
@@ -180,4 +180,4 @@ vows
     }
   })
 
-  .export(module)
+  .export(module)*/

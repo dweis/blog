@@ -1,6 +1,5 @@
 module.exports = function(app, mongoose) {
-  var application = require('../lib/application')
-    , config = application.getConfig()
+  var config = require('config').config
     , log = require('logging').from(__filename)
     , Post = mongoose.model('Post')
     , User = mongoose.model('User')

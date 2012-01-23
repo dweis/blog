@@ -1,0 +1,24 @@
+config:
+  siteName: 'Your Blog Name'
+  siteDescription: 'My personal blog'
+  siteAuthor: 'Your Name'
+  database: 'blog_development'
+  theme: 'darkness'
+  baseUrl: 'http://localhost:3000'
+  sessionSecret: 'CHOOSE A SESSION SECRET'
+  airbrakeKey: 'YOUR AIRBRAKE KEY'
+  airbrakeEnabled: false
+  adCode: '<!-- This code is inserted into the generated HTML -->'
+  analyticsCode: '<!-- This code is inserted into the generated HTML -->'
+  fbAppId: 'YOUR FACEBOOK APP ID'
+  fbAppSecret: 'YOUR FACEBOOK APP SECRET'
+  fbCallbackAddress: 'http://localhost:3000/auth/facebook'
+  appPort: 3000
+  appIp: '127.0.0.1'
+  customLinks:
+    link1:
+      name: 'First Link'
+      link: 'http://someplace.com'
+    link2:
+      name: 'Second Link'
+      link: 'http://someotherplace.org'

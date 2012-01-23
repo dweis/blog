@@ -17,8 +17,8 @@ h1
         input(type="hidden", name="_method", value="delete")
         input(type="submit", value="Delete")
   .tags
-    | Tags: 
-    - count = 0
+    | Tags:
+    - var count = 0
     - each tag in post.tags
       - if (count != 0)
         | ,

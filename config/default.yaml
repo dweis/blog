@@ -1,0 +1,19 @@
+config:
+  siteName: 'Blog'
+  siteDescription: 'My Blog'
+  siteAuthor: 'Unknown'
+  database: 'blog_development'
+  theme: 'darkness'
+  baseUrl: 'http://localhost:3000/'
+  sessionSecret: 'some_secret_session_key'
+  airbrakeKey: ''
+  airbrakeEnabled: false
+  adCode: ''
+  analyticsCode: ''
+  fbAppId: 'FACEBOOK_APP_ID'
+  fbAppSecret: 'FACEBOOK_APP_SECRET'
+  fbCallbackAddress: 'http://localhost:3000/auth/facebook'
+  appPort: 3000
+  appIp: '127.0.0.1'
+  appWorkers: 4
+  customLinks: []
