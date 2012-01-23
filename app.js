@@ -26,6 +26,13 @@ app.configure(function(){
   app.use(express.methodOverride())
   //app.use(express.logger())
 
+  app.use(express.session({
+    secret: config.sessionSecret,
+    store: new MongoStore({
+      url: 'mongodb://localhost/' + config.database
+    })
+  }))
+
   app.dynamicHelpers(helpers.dynamicHelpers)
   app.helpers(helpers.helpers)
 
@@ -61,29 +68,18 @@ app.error(function(err, req, res, next){
 })
 
 app.configure('development', function() {
-  app.use(express.session({ secret: config.sessionSecret }))
-
   app.use(express.static(__dirname + '/public'))
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   app.set('view cache', false)
 })
 
 app.configure('testing', function() {
-  app.use(express.session({ secret: config.sessionSecret }))
-
   app.use(express.static(__dirname + '/public'))
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   app.set('view cache', false)
 })
 
 app.configure('production', function() {
-  app.use(express.session({
-    secret: config.sessionSecret,
-    store: new MongoStore({
-      url: 'mongodb://localhost/' + config.database
-    })
-  }))
-
   const oneYear = 31557600000
   app.use(express.static(__dirname + '/public', { maxAge: oneYear }))
   app.use(express.errorHandler())
