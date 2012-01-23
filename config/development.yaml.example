@@ -16,9 +16,7 @@ config:
   appPort: 3000
   appIp: '127.0.0.1'
   customLinks:
-    link1:
-      name: 'First Link'
-      link: 'http://someplace.com'
-    link2:
-      name: 'Second Link'
-      link: 'http://someotherplace.org'
+    - name: 'First Link'
+    link: 'http://someplace.com'
+    - name: 'Second Link'
+    link: 'http://someotherplace.org'
