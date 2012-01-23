@@ -5,7 +5,6 @@ var express = require('express')
   , jade = require('jade')
   , auth = require('connect-auth')
   , mongoose = require('mongoose')
-  , MongoStore = require('connect-mongodb')
   , helpers = require(__dirname + '/app/helpers/helpers')
   , log = require('logging').from(__filename)
   , NotFound = require(__dirname + '/app/lib/errors').NotFound
