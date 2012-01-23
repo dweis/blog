@@ -10,6 +10,7 @@ var express = require('express')
   , log = require('logging').from(__filename)
   , NotFound = require(__dirname + '/app/lib/errors').NotFound
   , app = express.createServer()
+  , MongoStore = require('connect-mongo')
 
 var airbrake = require('airbrake').createClient(config.airbrakeKey)
 airbrake.handleExceptions()
@@ -31,8 +32,6 @@ app.configure(function(){
 
   app.set('view engine', 'jade')
   app.set('views', __dirname + '/app/views');
-
-  app.use(express.session({ secret: config.sessionSecret }))
 
   app.use(auth([
       auth.Facebook({ appId: config.fbAppId
@@ -63,22 +62,33 @@ app.error(function(err, req, res, next){
 })
 
 app.configure('development', function() {
+  app.use(express.session({ secret: config.sessionSecret }))
+
   app.use(express.static(__dirname + '/public'))
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   app.set('view cache', false)
 })
 
 app.configure('testing', function() {
+  app.use(express.session({ secret: config.sessionSecret }))
+
   app.use(express.static(__dirname + '/public'))
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   app.set('view cache', false)
 })
 
 app.configure('production', function() {
+  app.use(express.session({
+    secret: config.sessionSecret,
+    store: new MongoStore({
+      url: 'mongodb://localhost/' + config.database
+    })
+  }))
+
   const oneYear = 31557600000
   app.use(express.static(__dirname + '/public', { maxAge: oneYear }))
   app.use(express.errorHandler())
-  app.set('view cache', true) 
+  app.set('view cache', true)
 })
 
 mongoose.connect('mongodb://localhost/' + config.database)
