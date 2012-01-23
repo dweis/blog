@@ -5,7 +5,7 @@ This is a blog created in node.JS using express web framework. It was my node.JS
 ## Requirements ##
 
 * MongoDB
-* Vows testing framework installed globally (npm -g install vows)
+* Mocha testing framework installed globally (npm -g install mocha)
 
 ## Installation ##
 
